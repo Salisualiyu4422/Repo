@@ -1,0 +1,531 @@
+<!--DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>OpenAI Chatbot</title>
+  </head>
+  <body>
+    <h1>OpenAI Chatbot</h1>
+    <form id="chat-form">
+      <input type="text" id="message-input" placeholder="Enter your message">
+      <button type="submit">Send</button>
+    </form>
+    <div id="chat-history"></div>
+    <script>
+      const form = document.querySelector('#chat-form');
+      const messageInput = document.querySelector('#message-input');
+      const chatHistory = document.querySelector('#chat-history');
+      
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const message = messageInput.value;
+        messageInput.value = '';
+        
+        const response = await fetch('/api/message', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ message })
+        });
+        
+        const data = await response.json();
+        const messageElement = document.createElement('p');
+        messageElement.innerText = `You: ${message}\nSalisComputerist: ${data.response}`;
+        chatHistory.appendChild(messageElement);
+      });
+    </script>
+  </body>
+</html-->
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>SalisComputerist </title>
+    <style>
+     * {
+        box-sizing: border-box;
+      }
+      
+      body {
+        overflow: hidden;
+        font-family: Arial, sans-serif;
+        background-color: rgb(254, 152, 18);
+        margin: 0;
+        padding: 0;
+      }
+      
+      /* Add the viewport meta tag to make the page responsive */
+  
+      
+      header {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background-color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px;
+        z-index: 1;
+      }
+      
+      main {
+        margin-top: 60px; /* Set the top margin to the height of the header */
+        margin-bottom: 60px; /* Set the bottom margin to the height of the footer */
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        max-height: calc(100vh - 120px); /* Subtract the height of the header and footer from the viewport height */
+        overflow-y: auto;
+      }
+      
+      footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        background-color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+        z-index: 1;
+      }
+       h1 {
+        text-align: center;
+        margin-top: 20px;
+      }
+      
+      #chat-form {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        background-color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px;
+      }
+      
+      #message-input {
+        flex: 1;
+        border: none;
+        border-radius: 5px;
+        padding: 10px;
+        font-size: 16px;
+        outline: none;
+      }
+      
+      #chat-form button {
+        margin-left: auto;
+        background-color: #4CAF50;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 10px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+      
+      #chat-history {
+        margin-top: 20px;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        max-height: 70vh;
+        overflow-y: auto;
+      }
+      
+      #chat-history p {
+        margin: 0 0 10px;
+        line-height: 1.4;
+      }
+      
+
+
+
+/*
+      * {
+        box-sizing: border-box;
+      }
+      
+      body {
+        overflow: hidden;
+        
+        font-family: Arial, sans-serif;
+        background-color: rgb(225, 235, 245);
+      }
+      
+      h1 {
+        text-align: center;
+        margin-top: 20px;
+      }
+      
+      #chat-form {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background-color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px;
+      }
+      
+      #message-input {
+        flex: 1;
+        border: none;
+        border-radius: 5px;
+        padding: 10px;
+        font-size: 16px;
+        outline: none;
+        position: fixed;
+        bottom: 0;
+      }
+      
+      #chat-form button {
+        margin-left: auto;
+        background-color: #4CAF50;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        position: fixed;
+        bottom: 0;
+       right: 0;
+      }
+      
+      #chat-history {
+        margin-top: 20px;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        max-height: 70vh;
+        overflow-y: auto;
+      }
+      
+      #chat-history p {
+        margin: 0 0 10px;
+        line-height: 1.4;
+      }
+      
+      
+        #chat-form {
+          position: static;
+        }
+    */
+    </style>
+  </head>
+  <body>
+    <h1>SalisComputerist chatbot</h1>
+    <div id="chat-history"></div>
+    <form id="chat-form">
+      <input type="text" id="message-input" placeholder="Enter your message">
+      <button type="submit">Send</button>
+    </form>
+    <script>
+      const form = document.querySelector('#chat-form');
+      const messageInput = document.querySelector('#message-input');
+      const chatHistory = document.querySelector('#chat-history');
+      
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const message = messageInput.value;
+        messageInput.value = '';
+        
+        const response = await fetch('/api/message', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ message })
+        });
+        
+        const data = await response.json();
+        const messageElement = document.createElement('p');
+        messageElement.innerText = `You: ${message}\nSalisComputerist: ${data.response}`;
+        chatHistory.appendChild(messageElement);
+      });
+    </script>
+  </body>
+</html>
+
+
+
+<!--DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>OpenAI Chatbot</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        font-family: Arial, sans-serif;
+      }
+
+      header {
+        background-color: #2b2d42;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 70px;
+        font-size: 24px;
+      }
+
+      main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+      }
+
+      #chat-history {
+        flex: 1;
+        overflow-y: scroll;
+        margin-bottom: 20px;
+      }
+
+      #chat-form {
+        display: flex;
+        margin-top: auto;
+        margin-bottom: 20px;
+      }
+
+      #message-input {
+        flex: 1;
+        font-size: 16px;
+        padding: 10px;
+        border: none;
+        border-radius: 0;
+        border-bottom: 2px solid #ccc;
+      }
+
+      #message-input:focus {
+        outline: none;
+        border-bottom-color: #2b2d42;
+      }
+
+      #send-button {
+        font-size: 16px;
+        padding: 10px;
+        border: none;
+        border-radius: 0;
+        background-color: #2b2d42;
+        color: #fff;
+        cursor: pointer;
+      }
+
+      #send-button:hover {
+        background-color: #fff;
+        color: #2b2d42;
+      }
+
+      .chat-message {
+        margin: 0;
+        padding: 5px 0;
+      }
+
+      .chat-message:nth-child(even) {
+        background-color: #f5f5f5;
+      }
+
+      .chat-message:nth-child(odd) {
+        background-color: #fff;
+      }
+
+      .chat-message::before {
+        content: attr(data-sender);
+        font-weight: bold;
+        margin-right: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>OpenAI Chatbot</header>
+    <main>
+      <div id="chat-history"></div>
+      <form id="chat-form">
+        <input type="text" id="message-input" placeholder="Enter your message">
+        <button type="submit" id="send-button">Send</button>
+      </form>
+    </main>
+    <script>
+      const form = document.querySelector('#chat-form');
+      const messageInput = document.querySelector('#message-input');
+      const chatHistory = document.querySelector('#chat-history');
+      
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const message = messageInput.value;
+        messageInput.value = '';
+        
+        const response = await fetch('/api/message', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ message })
+        });
+        
+        const data = await response.json();
+        const messageElement = document.createElement('p');
+        messageElement.innerText = data.response;
+        messageElement.classList.add('chat-message');
+        messageElement.setAttribute('data-sender', 'SalisComputerist:');
+        chatHistory.appendChild(messageElement);
+        chatHistory.scrollTop = chatHistory.scrollHeight;
+      });
+    </script>
+  </body>
+</html-->
+
+<!--DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>SalisComputerist Chatbot</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        font-family: Arial, sans-serif;
+      }
+
+      header {
+        background-color: #2b2d42;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 70px;
+        font-size: 24px;
+      }
+
+      main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+      }
+
+      #chat-history {
+        flex: 1;
+        overflow-y: scroll;
+        margin-bottom: 20px;
+      }
+
+      #chat-form {
+        display: flex;
+        margin-top: auto;
+        margin-bottom: 20px;
+      }
+
+      #message-input {
+        flex: 1;
+        font-size: 16px;
+        padding: 10px;
+        border: none;
+        border-radius: 0;
+        border-bottom: 2px solid #ccc;
+      }
+
+      #message-input:focus {
+        outline: none;
+        border-bottom-color: #2b2d42;
+      }
+
+      #send-button {
+        font-size: 16px;
+        padding: 10px;
+        border: none;
+        border-radius: 0;
+        background-color: #2b2d42;
+        color: #fff;
+        cursor: pointer;
+        
+      }
+
+      #send-button:hover {
+        background-color: #0eea2b;
+        color: #0c1dd7;
+      }
+
+      .chat-message {
+        margin: 0;
+        padding: 5px 0;
+        
+      }
+
+      .chat-message:nth-child(even) {
+        background-color: #11d864;
+      }
+
+      .chat-message:nth-child(odd) {
+        background-color: hsl(200, 91%, 9%);
+        color: aqua;
+      }
+
+      .chat-message::before {
+        content: attr(data-sender);
+        font-weight: bold;
+        margin-right: 10px;
+    
+      }
+    </style>
+  </head>
+  <body>
+    <header>SalisComputerist Chatbot</header>
+    <main>
+      <div id="chat-history"></div>
+      <form id="chat-form">
+        <input type="text" id="message-input" placeholder="Enter your message">
+        <button type="submit" id="send-button">Send</button>
+      </form>
+    </main>
+    <script>
+      const form = document.querySelector('#chat-form');
+      const messageInput = document.querySelector('#message-input');
+      const chatHistory = document.querySelector('#chat-history');
+      
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const message = messageInput.value;
+        messageInput.value = '';
+        
+        const response = await fetch('/api/message', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ message })
+        });
+        
+        const data = await response.json();
+        const messageElement = document.createElement('p');
+        messageElement.innerText = data.response;
+        messageElement.classList.add('chat-message');
+        messageElement.setAttribute('data-sender', 'SalisComputerist:');
+        chatHistory.appendChild(messageElement);
+        chatHistory.scrollTop = chatHistory.scrollHeight;
+      });
+    </script>
+  </body-->
